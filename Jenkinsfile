@@ -3,14 +3,14 @@ pipeline {
 
     stages {
 
-        stage ('Build Docker image'){
+        stage ('Build Docker image') {
             steps {
                 script {
                     dockerapp = docker.build("juvinix/kube-news:${env.BUILD_ID}", '-f ./src/Dockerfile ./src')
                 }
             }
         }
-        stage ('Push Docker Image'){
+        stage ('Push Docker Image') {
             steps {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', 'dockerhub'){
@@ -22,7 +22,7 @@ pipeline {
         }
     }
 
-    stage('Deploy Kubernetes'){
+    stage ('Deploy Kubernetes') {
         steps {
             withKubeConfig ([credentialsId: 'kubeconfig']) {
                 sh 'kubectl apply -f ./k8s/deployment.yaml'
@@ -30,4 +30,3 @@ pipeline {
         }
     }
 }
-
