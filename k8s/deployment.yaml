@@ -54,7 +54,7 @@ spec:
       replicas: 4
       containers:
         - name: web
-          image: juvinix/kube-news:v1
+          image: juvinix/kube-news:{{TAG}}
           ports:
             - containerPort: 8080
           env:
